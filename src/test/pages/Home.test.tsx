@@ -3,12 +3,12 @@
  */
 import { render, fireEvent, waitFor, screen } from "@testing-library/react"
 import { test, expect, beforeAll } from "vitest"
-import Home from "../../pages/Home"
+import App from "../../App"
 
 let homeEl: HTMLElement
 
 beforeAll(() => {
-	const { getByTestId } = render(<Home/>)
+	const { getByTestId } = render(<App/>)
 	homeEl = getByTestId("home")
 })
 

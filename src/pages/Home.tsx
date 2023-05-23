@@ -1,5 +1,4 @@
-import React, { BaseSyntheticEvent, FormEvent, SyntheticEvent, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import React, { BaseSyntheticEvent, useEffect, useState } from "react"
 import { searchTestCases, fetchTestCases } from "../api/testCaseApi"
 import TestCaseList from "../components/TCase/TestCaseList"
 import SearchForm from "../components/TCase/SearchForm"
@@ -39,11 +38,9 @@ function Home() {
 	}
 
 	return (
-		<div data-testid="home" className="container is-max-desktop">
-			<div className="section">
-				<SearchForm submitHandler={ (ev: any) => handleSearch(ev) } />
-				<FilterTestCases filterHandler={ (ev: any) => handleFilter(ev) } />
-			</div>
+		<div data-testid="home" className="section container is-max-desktop">
+			<SearchForm submitHandler={ (ev: any) => handleSearch(ev) } />
+			<FilterTestCases filterHandler={ (ev: any) => handleFilter(ev) } />
 			<TestCaseList tcases={ tcases } />
 		</div>)
 }
