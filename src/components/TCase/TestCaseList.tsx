@@ -14,10 +14,26 @@ function TestCaseCard(props: any) {
 	)
 }
 
+function TestCaseControls(props: any) {
+
+	return (
+		<div className="field is-grouped is-grouped-right">
+			<div className="control">
+				<Link 
+					to={"create"} 
+					className="button is-primary">
+					New Test Case
+				</Link>
+			</div>
+		</div>
+	)
+}
+
 function TestCaseList(props: any) {
 	return (
-		<div className="section testcases">
-			{ props.tcases.map((v: string, k: string) => (<TestCaseCard key={k} val={v} />)) }
+		<div className="testcases">
+			<TestCaseControls />
+			{ props.tcases.map((v: string, k: number) => (<TestCaseCard key={k} val={v} />)) }
 		</div>
 	)
 }
