@@ -1,14 +1,21 @@
-import { BaseSyntheticEvent, useEffect, useState } from "react"
+import { BaseSyntheticEvent, useEffect, useState, createContext } from "react"
 import { useParams, Link } from "react-router-dom"
 import { fetchTestCases } from "../api/testCaseApi"
 import { createStep, fetchSteps } from "../api/stepApi"
+import { fetchBugReportsByTestcase } from "../api/bugReportApi"
 import StepsTable from "../components/Step/StepsTable"
 import CreateStepForm from "../components/Step/CreateStepForm"
 import { IStep } from "../models/IStep"
+import { ITestCase } from "../models/ITestCase"
+import { TestCaseControls } from "../components/TCase/TestCaseList"
+import TestCaseSummary from "../components/TCase/TestCaseSummary"
+import { IBug } from "../models/IBug"
+
 
 function TestCase() {
-	const [tcase, setTCase] = useState({title: "", description: "", authorEmail: ""})
+	const [tcase, setTCase] = useState({} as ITestCase)
 	const [steps, setSteps] = useState([] as IStep[])
+	const [bugs, setBugs] = useState([] as IBug[])
 	let { caseNumber } = useParams()
 
 	useEffect(() => {
@@ -17,6 +24,8 @@ function TestCase() {
 				.then(data => setTCase(data))
 			fetchSteps(caseNumber)
 				.then(data => setSteps(data))
+			fetchBugReportsByTestcase(caseNumber)
+				.then(data => setBugs(data))
 		}
 	}, [])
 
@@ -24,15 +33,12 @@ function TestCase() {
 		ev.preventDefault()
 		const form = new FormData(ev.target as HTMLFormElement)
 		const highestStep = steps.length
-		console.log(form.get("hasBug"))
-		const bugCheck = (form.get("hasBug") == "on") ? true : false
 		const stepParams = { 
 			stepOrder: highestStep,
 			testCaseNumber: caseNumber,
 			action: form.get("stepaction"), 
 			expectedResult: form.get("expectedResult"), 
-			actualResult: form.get("actualResult"),
-			hasBug: bugCheck
+			actualResult: form.get("actualResult")
 		}
 
 		return createStep(stepParams)
@@ -40,17 +46,9 @@ function TestCase() {
 	}
 
 	return (
-		<div data-testid="test-case" className="section test-case">
-			<Link 
-				to={"/"} 
-				className="button is-primary">
-				Back
-			</Link>
-			<div className="testcase-info">
-				<div><span className="subtitle is-4">Title:</span> { tcase.title }</div>
-				<div><span className="subtitle is-4">Description:</span> { tcase.description }</div>
-				<div><span className="subtitle is-4">Creator:</span> { tcase.authorEmail }</div>
-			</div>
+		<div data-testid="test-case" className="section test-case container is-max-desktop">
+			<TestCaseControls />
+			<TestCaseSummary tcase={ tcase } hasBugs={ bugs.length > 0 } bugs={ bugs } />
 			<StepsTable steps={ steps } />
 			<CreateStepForm submitHandler={ (ev: any) => handleCreateStep(ev) } />
 		</div>

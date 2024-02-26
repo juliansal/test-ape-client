@@ -4,6 +4,7 @@ function CreateStepForm({ submitHandler }: any, props: any) {
 
 	useEffect(() => {
 		const inputs = document.querySelectorAll("form input")
+		// normalize form fields
 		Array
 				.from(inputs)
 				.filter((input: any) => input["type"] != "submit")
@@ -42,16 +43,6 @@ function CreateStepForm({ submitHandler }: any, props: any) {
 								name="actualResult"
 								className="input"
 								type="text" placeholder="Actual Result" />
-						</div>
-					</div>
-					<div className="field">
-						<div className="control">
-							<label className="checkbox has-text-white">
-								<input
-									name="hasBug"
-									type="checkbox"
-								/> Has Bug
-							</label>
 						</div>
 					</div>
 					<div className="field">

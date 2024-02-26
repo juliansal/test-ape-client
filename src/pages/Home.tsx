@@ -1,6 +1,6 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react"
 import { searchTestCases, fetchTestCases } from "../api/testCaseApi"
-import TestCaseList from "../components/TCase/TestCaseList"
+import { TestCaseList, TestCaseControls } from "../components/TCase/TestCaseList"
 import SearchForm from "../components/TCase/SearchForm"
 import FilterTestCases from "../components/TCase/FilterTestCases"
 
@@ -41,6 +41,7 @@ function Home() {
 		<div data-testid="home" className="section container is-max-desktop">
 			<SearchForm submitHandler={ (ev: any) => handleSearch(ev) } />
 			<FilterTestCases filterHandler={ (ev: any) => handleFilter(ev) } />
+			<TestCaseControls />
 			<TestCaseList tcases={ tcases } />
 		</div>)
 }
