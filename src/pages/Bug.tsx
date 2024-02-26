@@ -22,10 +22,6 @@ function Bug() {
 		}
 	}, [])
 
-	const getRelatedTest = () => {
-		return `(# ${bug.testcaseId}) ${tcase.title}`
-	}
-
 	const handleChange = (ev: BaseSyntheticEvent) => {
 		ev.preventDefault()
 		const { name, value } = ev.target
@@ -36,7 +32,6 @@ function Bug() {
 	const handleClick = (ev: BaseSyntheticEvent) => {
 		ev.preventDefault()
 		setHasChanged(false)
-		console.debug(bug)
 		updateBugReport({ 
 			id: bug.id,
 			testcaseId: bug.testcaseId,
@@ -68,6 +63,12 @@ function Bug() {
 				defaultValue={ bug.bugStatus || "" } id="bugStatus">
 				{options}
 			</select>
+		)
+	}
+
+	const RelatedTest = () => {
+		return (
+			<div>{ `(# ${bug.testcaseId}) ${tcase.title}` }</div>
 		)
 	}
 
@@ -103,7 +104,7 @@ function Bug() {
 					<div className="subtitle is-4 has-text-light">Related Test:</div>
 				</div>
 				<div className="column">
-					<div>{ getRelatedTest() }</div>
+					<RelatedTest />
 				</div>
 			</div>
 			<div className="columns">
