@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Home from "../../pages/Home"
 
 function TestCaseCard(props: any) {
 	return (
@@ -15,27 +16,50 @@ function TestCaseCard(props: any) {
 }
 
 function TestCaseControls(props: any) {
-
 	return (
+		<>
 		<div className="field is-grouped is-grouped-right">
+			{ window.location.pathname != "/" && 
+				<div className="control">
+					<Link 
+						to={"/"} 
+						className="button is-primary">
+						Home
+					</Link>
+				</div>
+			}
 			<div className="control">
 				<Link 
-					to={"create"} 
+					to={"/bugs"} 
 					className="button is-primary">
-					New Test Case
+					Bugs
+				</Link>
+			</div>
+			<div className="control">
+				<Link 
+					to={"/create"} 
+					className="button is-primary">
+					+ New Test Case
+				</Link>
+			</div>
+			<div className="control">
+				<Link
+					to={"/bugs/create"}
+					className="button is-danger">
+					+ New Bug Report
 				</Link>
 			</div>
 		</div>
+		</>
 	)
 }
 
 function TestCaseList(props: any) {
 	return (
 		<div className="testcases">
-			<TestCaseControls />
 			{ props.tcases.map((v: string, k: number) => (<TestCaseCard key={k} val={v} />)) }
 		</div>
 	)
 }
 
-export default TestCaseList
+export { TestCaseList, TestCaseControls }

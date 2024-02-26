@@ -1,14 +1,18 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react"
-import { fetchBugReports } from "../api/bugReportApi"
+import { useParams, Link } from "react-router-dom"
+import { fetchBugReportsByTestcase } from "../api/bugReportApi"
 import BugReportsList from "../components/BugReport/BugReportsList"
 import { TestCaseControls } from "../components/TCase/TestCaseList"
 
-function BugReports() {
+function TestCaseBugs(props: any) {
+	let { testcaseId } = useParams()
 	const [bugs, setBugs] = useState([])
 
 	useEffect(() => {
-		fetchBugReports("ACTIVE")
-			.then(data => setBugs(data))
+		if (testcaseId) {
+			fetchBugReportsByTestcase(testcaseId)
+				.then(data => setBugs(data))
+		}
 	}, [])
 
 	return (
@@ -17,7 +21,6 @@ function BugReports() {
 			<BugReportsList bugs={bugs} />
 		</div>
 	)
-
 }
 
-export default BugReports
+export default TestCaseBugs

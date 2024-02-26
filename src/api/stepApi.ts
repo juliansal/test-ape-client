@@ -19,3 +19,14 @@ export const createStep = async (step: any) => {
 	
 	return response.data
 }
+
+export const updateStep = async (step: any) => {
+	const config: AxiosRequestConfig<any> = { 
+		headers: { 
+			'Content-Type': 'application/json' 
+		}
+	}
+	const response = await stepApi.put("/", step, config)
+	
+	return response.data
+}

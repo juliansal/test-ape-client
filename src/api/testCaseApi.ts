@@ -22,6 +22,5 @@ export const createTestCase = async (testCase: any) => {
 		}
 	}
 	const response = await testCaseApi.post("new", testCase, config)
-	
 	return response.data
 }
