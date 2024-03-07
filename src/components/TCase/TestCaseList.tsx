@@ -49,6 +49,13 @@ function TestCaseControls(props: any) {
 					+ New Bug Report
 				</Link>
 			</div>
+			<div className="control">
+				<Link
+					to={"/login"}
+					className="button">
+					Login
+				</Link>
+			</div>
 		</div>
 		</>
 	)
